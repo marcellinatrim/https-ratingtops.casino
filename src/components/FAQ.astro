@@ -1,0 +1,43 @@
+---
+// FAQ.astro — Компонент вопросов и ответов
+// Принимает массив объектов {q, a}
+
+interface FAQItem {
+  q: string;
+  a: string;
+}
+
+interface Props {
+  items: FAQItem[];
+  heading?: string;
+}
+
+const { items, heading = 'Часто задаваемые вопросы' } = Astro.props;
+---
+
+<section id="faq" aria-labelledby="faq-heading">
+  <div class="container">
+    <h2 id="faq-heading">{heading}</h2>
+    <div class="faq-list" itemscope itemtype="https://schema.org/FAQPage">
+      {items.map((item, i) => (
+        <details
+          class="faq-item"
+          itemscope
+          itemprop="mainEntity"
+          itemtype="https://schema.org/Question"
+          open={i === 0}
+        >
+          <summary itemprop="name">{item.q}</summary>
+          <div
+            class="faq-item__answer"
+            itemscope
+            itemprop="acceptedAnswer"
+            itemtype="https://schema.org/Answer"
+          >
+            <p itemprop="text">{item.a}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

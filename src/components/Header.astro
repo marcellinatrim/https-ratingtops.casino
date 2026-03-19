@@ -1,0 +1,37 @@
+---
+// Header.astro — Шапка сайта
+// Props: siteTitle (опционально, если нужен кастомный заголовок)
+interface Props {
+  activePage?: string;
+}
+
+const { activePage = '' } = Astro.props;
+
+const nav = [
+  { href: '/', label: 'Все казино' },
+  { href: '/min-depozit', label: 'Мин. депозит' },
+  { href: '/mobilnye', label: 'Мобильные' },
+  { href: '/s-litsenziei', label: 'С лицензией' },
+  { href: '/demo-bez-registracii', label: 'Демо' },
+];
+---
+
+<header class="site-header">
+  <div class="container">
+    <a href="/" class="site-logo">🎰 КазиноРейтинг</a>
+    <nav aria-label="Основная навигация">
+      <ul class="site-nav">
+        {nav.map(item => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={activePage === item.href ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>

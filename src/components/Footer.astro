@@ -1,0 +1,38 @@
+---
+// Footer.astro — Подвал сайта с навигацией и дисклеймером
+const footerNav = [
+  { href: '/', label: 'Главная' },
+  { href: '/min-depozit', label: 'Мин. депозит' },
+  { href: '/mobilnye', label: 'Мобильные' },
+  { href: '/s-litsenziei', label: 'С лицензией' },
+  { href: '/demo-bez-registracii', label: 'Демо' },
+  { href: '/about', label: 'О нас' },
+  { href: '/privacy', label: 'Конфиденциальность' },
+];
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <nav aria-label="Навигация в подвале">
+      <ul class="footer-nav">
+        {footerNav.map(item => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="footer-disclaimer">
+      <p>
+        © {currentYear} КазиноРейтинг — независимый агрегатор онлайн-казино.
+        Все материалы носят информационный характер. Мы можем получать комиссию
+        за переходы по партнёрским ссылкам — это не влияет на объективность наших обзоров.
+      </p>
+      <p style="margin-top: 8px;">
+        <strong>18+</strong> Игорная деятельность сопряжена с риском. Играйте ответственно.
+        Если у вас есть признаки игровой зависимости, обратитесь на горячую линию помощи.
+      </p>
+    </div>
+  </div>
+</footer>

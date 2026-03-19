@@ -1,0 +1,92 @@
+---
+// src/pages/mobilnye.astro — Мобильные казино
+// ФИЛЬТР: is_mobile_friendly === true
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CasinoCard from '../components/CasinoCard.astro';
+import FAQ from '../components/FAQ.astro';
+import casinosRaw from '../data/casinos.json';
+
+// ---- ЛОГИКА КЛАСТЕРА ----
+const casinos = [...casinosRaw]
+  .filter(c => c.is_mobile_friendly === true)
+  .sort((a, b) => b.rating - a.rating);
+
+const faqItems = [
+  {
+    q: 'Какие казино лучше работают на смартфоне?',
+    a: 'Все казино в этом списке прошли проверку на корректную работу в мобильном браузере. Большинство также имеют адаптивный интерфейс без необходимости скачивать приложение.',
+  },
+  {
+    q: 'Нужно ли скачивать приложение казино?',
+    a: 'Нет, большинство современных казино работают прямо в браузере смартфона через мобильную версию сайта. Некоторые предлагают и нативные приложения для iOS и Android.',
+  },
+  {
+    q: 'Безопасно ли играть в казино с телефона?',
+    a: 'Да, если вы используете надёжное подключение (не публичный Wi-Fi) и заходите на официальный сайт казино. Наши рекомендованные площадки используют SSL-шифрование.',
+  },
+];
+---
+
+<BaseLayout
+  title="Мобильные казино 2024 — Лучшие казино для смартфона"
+  description={`Топ ${casinos.length} казино с удобной мобильной версией для Android и iOS. Играйте на смартфоне без скачивания приложения.`}
+  activePage="/mobilnye"
+>
+
+  <section id="hero">
+    <div class="container">
+      <h1><em>Мобильные казино</em> 2024 — Играйте на смартфоне</h1>
+      <p>
+        {casinos.length} казино с удобной мобильной версией.
+        Никаких приложений — играйте прямо в браузере.
+      </p>
+    </div>
+  </section>
+
+  <section id="rating">
+    <div class="container">
+      <h2>Казино с мобильной версией ({casinos.length} шт.)</h2>
+
+      <div class="page-meta">
+        <span class="page-meta__badge">📱 Мобильные</span>
+        <span>Найдено: {casinos.length} казино</span>
+      </div>
+
+      <div class="rating-list" role="list">
+        {casinos.map((casino, index) => (
+          <div role="listitem">
+            <CasinoCard casino={casino} rank={index + 1} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="seo-content">
+    <div class="container">
+      <h2>Мобильные казино: как выбрать лучшее?</h2>
+      <p>
+        Мобильные казино сегодня практически не уступают десктопным версиям.
+        Современные HTML5-слоты адаптированы под сенсорные экраны, а интерфейс
+        оптимизирован для небольших дисплеев. Lorem ipsum dolor sit amet.
+      </p>
+
+      <h3>Мобильный браузер vs. Приложение</h3>
+      <p>
+        Браузерная версия не требует установки и обновляется автоматически.
+        Нативное приложение может работать быстрее и предлагать push-уведомления
+        о бонусах. Выбор зависит от ваших предпочтений.
+      </p>
+
+      <h3>Какие слоты работают на мобильном?</h3>
+      <p>
+        Все слоты от ведущих провайдеров (Pragmatic Play, Evolution, NetEnt) поддерживают
+        мобильные устройства. Живые игры с дилерами также доступны на смартфоне при
+        стабильном интернет-соединении.
+      </p>
+    </div>
+  </section>
+
+  <FAQ items={faqItems} heading="FAQ: Мобильные казино" />
+
+</BaseLayout>

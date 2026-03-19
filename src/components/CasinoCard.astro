@@ -1,0 +1,75 @@
+---
+// CasinoCard.astro — Карточка казино в рейтинге
+// Принимает объект казино из casinos.json + порядковый номер
+
+interface Casino {
+  id: string;
+  name: string;
+  logo: string;
+  rating: number;
+  min_deposit: number;
+  bonus_text: string;
+  features: string[];
+  go_link: string;
+  is_mobile_friendly: boolean;
+  has_license: boolean;
+  no_registration_demo: boolean;
+}
+
+interface Props {
+  casino: Casino;
+  rank: number;
+}
+
+const { casino, rank } = Astro.props;
+---
+
+<article class="casino-card" id={`casino-${casino.id}`}>
+  <!-- Порядковый номер в рейтинге -->
+  <div class="casino-card__rank">#{rank}</div>
+
+  <!-- Логотип -->
+  <div class="casino-card__logo" aria-hidden="true">
+    {casino.name.slice(0, 3)}
+  </div>
+
+  <!-- Название и теги -->
+  <div class="casino-card__info">
+    <div class="casino-card__name">{casino.name}</div>
+    <div class="casino-card__features">
+      {casino.features.map(tag => (
+        <span class="casino-card__tag">{tag}</span>
+      ))}
+      {casino.is_mobile_friendly && <span class="casino-card__tag">📱 Моб.</span>}
+      {casino.has_license && <span class="casino-card__tag">✅ Лицензия</span>}
+      {casino.no_registration_demo && <span class="casino-card__tag">🎮 Демо</span>}
+    </div>
+  </div>
+
+  <!-- Бонус -->
+  <div class="casino-card__bonus">
+    {casino.bonus_text}
+  </div>
+
+  <!-- Мин. депозит -->
+  <div class="casino-card__deposit">
+    <strong>{casino.min_deposit} ₽</strong>
+    мин. депозит
+  </div>
+
+  <!-- Рейтинг -->
+  <div class="casino-card__rating" title="Рейтинг экспертов">
+    ★ {casino.rating}
+  </div>
+
+  <!-- CTA кнопка -->
+  <a
+    href={casino.go_link}
+    class="casino-card__cta"
+    rel="nofollow noopener sponsored"
+    target="_blank"
+    aria-label={`Играть в ${casino.name}`}
+  >
+    Играть →
+  </a>
+</article>

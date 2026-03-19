@@ -1,13 +1,13 @@
 ---
-// Footer.astro — Подвал сайта с навигацией и дисклеймером
+// Footer.astro — Подвал сайта
 const footerNav = [
-  { href: '/', label: 'Главная' },
+  { href: '/', label: 'Все казино' },
   { href: '/min-depozit', label: 'Мин. депозит' },
   { href: '/mobilnye', label: 'Мобильные' },
   { href: '/s-litsenziei', label: 'С лицензией' },
   { href: '/demo-bez-registracii', label: 'Демо' },
   { href: '/about', label: 'О нас' },
-  { href: '/privacy', label: 'Конфиденциальность' },
+  { href: '/privacy', label: 'Политика' },
 ];
 
 const currentYear = new Date().getFullYear();
@@ -15,23 +15,33 @@ const currentYear = new Date().getFullYear();
 
 <footer class="site-footer">
   <div class="container">
-    <nav aria-label="Навигация в подвале">
-      <ul class="footer-nav">
-        {footerNav.map(item => (
-          <li><a href={item.href}>{item.label}</a></li>
-        ))}
-      </ul>
-    </nav>
+    <div class="footer-inner">
+      <!-- Бренд -->
+      <div class="footer-brand">
+        <div class="footer-logo">Казино<span>Рейтинг</span></div>
+        <div class="footer-tagline">Независимый агрегатор · Обновляется ежемесячно</div>
+      </div>
 
+      <!-- Навигация -->
+      <nav aria-label="Навигация в подвале">
+        <ul class="footer-nav">
+          {footerNav.map(item => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Дисклеймер -->
     <div class="footer-disclaimer">
       <p>
         © {currentYear} КазиноРейтинг — независимый агрегатор онлайн-казино.
-        Все материалы носят информационный характер. Мы можем получать комиссию
-        за переходы по партнёрским ссылкам — это не влияет на объективность наших обзоров.
+        Все материалы носят информационный характер.
+        Мы можем получать комиссию за переходы по партнёрским ссылкам — это не влияет на объективность оценок.
       </p>
-      <p style="margin-top: 8px;">
+      <p>
         <strong>18+</strong> Игорная деятельность сопряжена с риском. Играйте ответственно.
-        Если у вас есть признаки игровой зависимости, обратитесь на горячую линию помощи.
+        При наличии признаков игровой зависимости обратитесь за помощью к специалисту.
       </p>
     </div>
   </div>

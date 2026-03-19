@@ -1,6 +1,5 @@
 ---
-// Header.astro — Шапка сайта
-// Props: siteTitle (опционально, если нужен кастомный заголовок)
+// Header.astro — Шапка сайта с переключателем темы и мобильным меню
 interface Props {
   activePage?: string;
 }
@@ -18,7 +17,12 @@ const nav = [
 
 <header class="site-header">
   <div class="container">
-    <a href="/" class="site-logo">🎰 КазиноРейтинг</a>
+    <!-- Логотип -->
+    <a href="/" class="site-logo">
+      Казино<span>Рейтинг</span>
+    </a>
+
+    <!-- Навигация (десктоп) -->
     <nav aria-label="Основная навигация">
       <ul class="site-nav">
         {nav.map(item => (
@@ -33,5 +37,92 @@ const nav = [
         ))}
       </ul>
     </nav>
+
+    <!-- Правая группа кнопок -->
+    <div class="header-right">
+      <!-- Переключатель темы -->
+      <button
+        class="theme-toggle"
+        id="theme-toggle"
+        aria-label="Переключить тему"
+        title="Переключить тему"
+      >
+        <span class="icon-moon" aria-hidden="true">🌙</span>
+        <span class="icon-sun"  aria-hidden="true">☀️</span>
+      </button>
+
+      <!-- Бургер (мобайл) -->
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-label="Открыть меню"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
   </div>
+
+  <!-- Мобильное меню -->
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Мобильная навигация">
+    {nav.map(item => (
+      <a
+        href={item.href}
+        aria-current={activePage === item.href ? 'page' : undefined}
+      >
+        {item.label}
+      </a>
+    ))}
+  </nav>
 </header>
+
+<!-- ====================================================
+  Скрипт темы — инлайн, выполняется ДО рендера (no-FOUC)
+  Используем id=theme-init в <head> через BaseLayout.
+  Здесь только обработчики событий.
+==================================================== -->
+<script>
+  (function () {
+    // ---- Применить тему немедленно (вызывается из BaseLayout <head>) ----
+    // Функция вынесена глобально, чтобы BaseLayout мог вызвать её до рендера
+
+    function applyTheme(theme: string) {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+
+    // ---- Theme Toggle ----
+    const btn = document.getElementById('theme-toggle') as HTMLButtonElement | null;
+
+    if (btn) {
+      btn.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        const next = current === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+        try { localStorage.setItem('theme', next); } catch(_) {}
+      });
+    }
+
+    // ---- Mobile Menu Toggle ----
+    const navToggle = document.getElementById('nav-toggle') as HTMLButtonElement | null;
+    const mobileNav = document.getElementById('mobile-nav') as HTMLElement | null;
+
+    if (navToggle && mobileNav) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = mobileNav.classList.toggle('is-open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+        navToggle.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
+      });
+
+      // Закрыть меню при клике вне
+      document.addEventListener('click', (e) => {
+        if (!navToggle.contains(e.target as Node) && !mobileNav.contains(e.target as Node)) {
+          mobileNav.classList.remove('is-open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  })();
+</script>

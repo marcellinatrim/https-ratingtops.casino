@@ -1,6 +1,7 @@
 ---
-// CasinoCard.astro — Карточка казино в рейтинге
-// Принимает объект казино из casinos.json + порядковый номер
+// CasinoCard.astro — Карточка казино
+// Mobile: Card UI / Desktop: Row UI (через CSS grid + display:contents)
+// Данные приходят из casinos.json через Astro.props — не хардкодим
 
 interface Casino {
   id: string;
@@ -22,27 +23,39 @@ interface Props {
 }
 
 const { casino, rank } = Astro.props;
+
+// Звёзды рейтинга (одна знаковая звезда + число)
+const ratingDisplay = `★ ${casino.rating.toFixed(1)}`;
 ---
 
 <article class="casino-card" id={`casino-${casino.id}`}>
-  <!-- Порядковый номер в рейтинге -->
-  <div class="casino-card__rank">#{rank}</div>
+
+  <!-- Ранг -->
+  <div class="casino-card__rank" aria-label={`Позиция в рейтинге: ${rank}`}>
+    #{rank}
+  </div>
 
   <!-- Логотип -->
   <div class="casino-card__logo" aria-hidden="true">
-    {casino.name.slice(0, 3)}
+    {casino.name.slice(0, 3).toUpperCase()}
   </div>
 
-  <!-- Название и теги -->
+  <!-- Название + теги -->
   <div class="casino-card__info">
     <div class="casino-card__name">{casino.name}</div>
     <div class="casino-card__features">
       {casino.features.map(tag => (
         <span class="casino-card__tag">{tag}</span>
       ))}
-      {casino.is_mobile_friendly && <span class="casino-card__tag">📱 Моб.</span>}
-      {casino.has_license && <span class="casino-card__tag">✅ Лицензия</span>}
-      {casino.no_registration_demo && <span class="casino-card__tag">🎮 Демо</span>}
+      {casino.is_mobile_friendly && (
+        <span class="casino-card__tag">📱 Моб.</span>
+      )}
+      {casino.has_license && (
+        <span class="casino-card__tag">✅ Лицензия</span>
+      )}
+      {casino.no_registration_demo && (
+        <span class="casino-card__tag">🎮 Демо</span>
+      )}
     </div>
   </div>
 
@@ -51,18 +64,23 @@ const { casino, rank } = Astro.props;
     {casino.bonus_text}
   </div>
 
-  <!-- Мин. депозит -->
-  <div class="casino-card__deposit">
-    <strong>{casino.min_deposit} ₽</strong>
-    мин. депозит
+  <!--
+    .casino-card__meta — обёртка для мобайл.
+    На десктопе получает display:contents, и дочерние элементы
+    (.casino-card__deposit, .casino-card__rating) становятся
+    прямыми участниками grid-родителя, занимая свои grid-area.
+  -->
+  <div class="casino-card__meta">
+    <div class="casino-card__deposit">
+      <strong>{casino.min_deposit} ₽</strong>
+      мин. депозит
+    </div>
+    <div class="casino-card__rating" title="Рейтинг экспертов">
+      {ratingDisplay}
+    </div>
   </div>
 
-  <!-- Рейтинг -->
-  <div class="casino-card__rating" title="Рейтинг экспертов">
-    ★ {casino.rating}
-  </div>
-
-  <!-- CTA кнопка -->
+  <!-- CTA -->
   <a
     href={casino.go_link}
     class="casino-card__cta"
@@ -72,4 +90,5 @@ const { casino, rank } = Astro.props;
   >
     Играть →
   </a>
+
 </article>

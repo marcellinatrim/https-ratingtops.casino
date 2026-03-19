@@ -6,12 +6,21 @@ import CasinoCard from '../components/CasinoCard.astro';
 import FAQ from '../components/FAQ.astro';
 import casinosRaw from '../data/casinos.json';
 
+// ── Build-time утилиты ──────────────────────────────────────────────────────
+// Выполняются ТОЛЬКО в Node.js при сборке. В HTML попадают готовые строки.
+import { getBuildMonth, getBuildYear, getBuildDateISO, getBuildDateFull } from '../utils/date';
+
+const buildMonth = getBuildMonth();   // "Март 2026"
+const buildYear  = getBuildYear();    // 2026
+const buildISO   = getBuildDateISO(); // "2026-03-19"
+const buildFull  = getBuildDateFull();// "19 марта 2026"
+
 // ---- ЕДИНСТВЕННОЕ МЕСТО СОРТИРОВКИ ----
 const casinos = [...casinosRaw].sort((a, b) => b.rating - a.rating);
 
 const faqItems = [
   {
-    q: 'Как выбрать надёжное онлайн-казино в 2024 году?',
+    q: `Как выбрать надёжное онлайн-казино в ${buildYear} году?`,
     a: 'При выборе казино обращайте внимание на наличие лицензии, репутацию среди игроков, скорость выплат и качество службы поддержки. Наш рейтинг учитывает все эти параметры и обновляется ежемесячно.',
   },
   {
@@ -30,15 +39,15 @@ const faqItems = [
 ---
 
 <BaseLayout
-  title="Лучшие онлайн-казино 2024 — Рейтинг и бонусы | КазиноРейтинг"
-  description="Независимый рейтинг лучших онлайн-казино для игроков из России. Актуальные бонусы, быстрые выплаты, проверенные лицензии. Обновлено в 2024 году."
+  title={`Лучшие онлайн-казино ${buildYear} — Рейтинг и бонусы | КазиноРейтинг`}
+  description={`Независимый рейтинг лучших онлайн-казино для игроков из России. Актуальные бонусы, быстрые выплаты, проверенные лицензии. Обновлено: ${buildMonth}.`}
   activePage="/"
 >
 
   <!-- 1. HERO -->
   <section id="hero">
     <div class="container">
-      <h1>Рейтинг лучших <em>онлайн-казино</em> в 2024 году</h1>
+      <h1>Рейтинг лучших <em>онлайн-казино</em> в {buildYear} году</h1>
       <p>
         Независимая экспертная оценка {casinos.length} казино. Актуальные бонусы,
         честные выплаты, только проверенные площадки.
@@ -52,8 +61,8 @@ const faqItems = [
       <h2>Топ казино — все {casinos.length} площадок</h2>
 
       <div class="page-meta">
-        <span class="page-meta__badge">Обновлено: {new Date().toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' })}</span>
-        <span>Сортировка: по рейтингу эксперта</span>
+        <span class="page-meta__badge">Обновлено: {buildMonth}</span>
+        <span>Актуально на {buildFull} · Сортировка по рейтингу</span>
       </div>
 
       <div class="rating-list" role="list">
@@ -67,9 +76,10 @@ const faqItems = [
   </section>
 
   <!-- 3. SEO-КОНТЕНТ -->
-  <section id="seo-content">
+  <section id="seo-content" itemscope itemtype="https://schema.org/Article">
+    <meta itemprop="dateModified" content={buildISO} />
     <div class="container">
-      <h2>Как мы составляем рейтинг казино?</h2>
+      <h2>Как мы составляем рейтинг казино в {buildYear} году?</h2>
       <p>
         Наша редакция ежемесячно анализирует более 50 площадок по более чем 30 параметрам.
         В рейтинг попадают только те казино, которые прошли проверку по ключевым критериям.

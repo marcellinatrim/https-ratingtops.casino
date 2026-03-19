@@ -3,6 +3,11 @@
 // Mobile: Card UI / Desktop: Row UI (через CSS grid + display:contents)
 // Данные приходят из casinos.json через Astro.props — не хардкодим
 
+// ── Build-time утилиты ──────────────────────────────────────────────────────
+// Импорты выполняются ТОЛЬКО в Node.js во время сборки.
+// В скомпилированный HTML попадают уже готовые строки — без JS на клиенте.
+import { generateRtp } from '../utils/rtp';
+
 interface Casino {
   id: string;
   name: string;
@@ -26,6 +31,17 @@ const { casino, rank } = Astro.props;
 
 // Звёзды рейтинга (одна знаковая звезда + число)
 const ratingDisplay = `★ ${casino.rating.toFixed(1)}`;
+
+// ── Build-time RTP ─────────────────────────────────────────────────────────
+// Вычисляется один раз при сборке. Вшивается в HTML как статичный текст.
+// Детерминирован в рамках одной сборки, меняется каждый месяц (freshness).
+const casinoRtp = generateRtp(casino.id);
+
+// ── Логотип: пропорции для CLS-защиты ─────────────────────────────────────
+// CSS задаёт logo 64×40px (mobile) / 84×48px (desktop).
+// Указываем наибольший размер — браузер зарезервирует место до загрузки.
+const LOGO_W = 84;
+const LOGO_H = 48;
 ---
 
 <article class="casino-card" id={`casino-${casino.id}`}>
@@ -35,9 +51,20 @@ const ratingDisplay = `★ ${casino.rating.toFixed(1)}`;
     #{rank}
   </div>
 
-  <!-- Логотип -->
-  <div class="casino-card__logo" aria-hidden="true">
-    {casino.name.slice(0, 3).toUpperCase()}
+  <!-- Логотип
+       width/height — резервируют место ДО загрузки → нет CLS.
+       loading="lazy" — не блокирует LCP основного контента.
+       decoding="async" — декодирование в фоне, не блокирует main thread.
+  -->
+  <div class="casino-card__logo">
+    <img
+      src={casino.logo}
+      alt={`Логотип ${casino.name}`}
+      width={LOGO_W}
+      height={LOGO_H}
+      loading="lazy"
+      decoding="async"
+    />
   </div>
 
   <!-- Название + теги -->
@@ -74,6 +101,10 @@ const ratingDisplay = `★ ${casino.rating.toFixed(1)}`;
     <div class="casino-card__deposit">
       <strong>{casino.min_deposit} ₽</strong>
       мин. депозит
+    </div>
+    <!-- RTP: число вшито в HTML при сборке, клиентского JS нет -->
+    <div class="casino-card__rtp" title="Теоретический процент отдачи (вшит при сборке)">
+      RTP: {casinoRtp}%
     </div>
     <div class="casino-card__rating" title="Рейтинг экспертов">
       {ratingDisplay}

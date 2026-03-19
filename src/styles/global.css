@@ -869,3 +869,74 @@ img { max-width: 100%; display: block; }
   .casino-card__tag { font-size: 0.6rem; padding: 1px 5px; }
   .casino-card { gap: 8px 10px; }
 }
+
+/* ============================================
+   14. RTP BADGE (Build-time значение)
+   ============================================ */
+.casino-card__rtp {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--color-text-faint);
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+@media (min-width: 768px) {
+  .casino-card__rtp { display: none; }
+}
+
+/* ============================================
+   15. LOW-CONNECTION MODE
+   Класс .low-connection добавляется на <html> инлайн-скриптом
+   в <head> при effectiveType: slow-2g / 2g / 3g.
+   Всё выполняется ДО первого рендера — браузер не делает
+   сетевых запросов на шрифты и не считает тяжёлые эффекты.
+   ============================================ */
+
+/* Системный шрифт — 0мс на загрузку, уже в ОС */
+html.low-connection {
+  --font-main: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif !important;
+}
+
+/* Убираем все тени */
+html.low-connection *,
+html.low-connection *::before,
+html.low-connection *::after {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* Hero: градиент → сплошной цвет */
+html.low-connection #hero {
+  background: #1e3a5f !important;
+}
+
+html.low-connection[data-theme="dark"] #hero {
+  background: #0d1117 !important;
+}
+
+/* Убираем псевдоэлемент с radial-gradient */
+html.low-connection #hero::before {
+  display: none !important;
+}
+
+/* Убираем backdrop-filter (тяжёлый для GPU) */
+html.low-connection .site-header {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Отключаем анимации — экономим CPU/GPU */
+html.low-connection * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* Нет hover-трансформаций */
+html.low-connection .casino-card:hover,
+html.low-connection .casino-card__cta:hover,
+html.low-connection .theme-toggle:hover {
+  transform: none !important;
+}

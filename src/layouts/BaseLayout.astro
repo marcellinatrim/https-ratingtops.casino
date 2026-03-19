@@ -52,6 +52,43 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
     })();
   </script>
 
+  <!--
+    NETWORK INFORMATION API: Определяем скорость соединения ДО рендера.
+    При slow-2g / 2g / 3g добавляем класс .low-connection на <html>.
+    CSS по этому классу:
+      – отключает загрузку веб-шрифтов (откат на system-ui)
+      – убирает тени и градиенты (hero → solid color)
+    Результат: мгновенная отрисовка на слабой сети → нет отказов → ПФ растут.
+
+    Скрипт инлайновый и синхронный — выполняется до первого рендера,
+    поэтому браузер никогда не запрашивает шрифты при плохом соединении.
+  -->
+  <script is:inline>
+    (function() {
+      try {
+        var conn = navigator.connection
+          || navigator.mozConnection
+          || navigator.webkitConnection;
+        if (conn) {
+          var slow = ['slow-2g', '2g', '3g'];
+          if (slow.indexOf(conn.effectiveType) !== -1) {
+            document.documentElement.classList.add('low-connection');
+          }
+          // Отслеживаем динамическое изменение сети (например, въехал в тоннель)
+          conn.addEventListener('change', function() {
+            if (slow.indexOf(conn.effectiveType) !== -1) {
+              document.documentElement.classList.add('low-connection');
+            } else {
+              document.documentElement.classList.remove('low-connection');
+            }
+          });
+        }
+      } catch(e) {
+        // API недоступно — ничего не делаем, грузим полный дизайн
+      }
+    })();
+  </script>
+
   <!-- Schema.org: WebSite -->
   <script type="application/ld+json">
     {

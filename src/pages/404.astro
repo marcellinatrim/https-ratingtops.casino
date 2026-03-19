@@ -1,0 +1,228 @@
+---
+// src/pages/404.astro — Страница "Не найдено"
+// Astro собирает её как /404.html — именно этот путь указан в ErrorDocument .htaccess
+// meta robots: noindex — краулеру не нужно индексировать страницу ошибки
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Страница не найдена — КазиноРейтинг</title>
+  <meta name="description" content="Запрошенная страница не существует. Вернитесь на главную." />
+
+  <!-- Не индексировать страницу ошибки -->
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Anti-FOUC: тема до рендера -->
+  <script is:inline>
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var theme = saved === 'dark' || saved === 'light'
+          ? saved
+          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <Header />
+  <main>
+    <section id="hero" class="error-hero">
+      <div class="container">
+        <div class="error-code">404</div>
+        <h1>Страница <em>не найдена</em></h1>
+        <p>
+          Такой страницы не существует или она была перемещена.
+          Воспользуйтесь навигацией или вернитесь на главную.
+        </p>
+        <div class="error-actions">
+          <a href="/" class="btn-primary">← На главную</a>
+          <a href="/s-litsenziei/" class="btn-secondary">Казино с лицензией</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Краткий список разделов — помогает пользователю и не даёт "мягкому 404" -->
+    <section class="error-nav-section">
+      <div class="container">
+        <h2>Разделы сайта</h2>
+        <div class="error-nav-grid">
+          <a href="/" class="error-nav-card">
+            <span class="error-nav-icon">🏆</span>
+            <span>Все казино</span>
+          </a>
+          <a href="/s-litsenziei/" class="error-nav-card">
+            <span class="error-nav-icon">✅</span>
+            <span>С лицензией</span>
+          </a>
+          <a href="/mobilnye/" class="error-nav-card">
+            <span class="error-nav-icon">📱</span>
+            <span>Мобильные</span>
+          </a>
+          <a href="/bystrye-vyplaty/" class="error-nav-card">
+            <span class="error-nav-icon">⚡</span>
+            <span>Быстрые выплаты</span>
+          </a>
+          <a href="/min-depozit/" class="error-nav-card">
+            <span class="error-nav-icon">💰</span>
+            <span>Мин. депозит</span>
+          </a>
+          <a href="/demo/" class="error-nav-card">
+            <span class="error-nav-icon">🎮</span>
+            <span>Демо</span>
+          </a>
+          <a href="/vysokiy-rtp/" class="error-nav-card">
+            <span class="error-nav-icon">📊</span>
+            <span>Высокий RTP</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</body>
+</html>
+
+<style>
+  /* ── Стили страницы 404 ── */
+  .error-hero {
+    padding: 64px 0 48px;
+    text-align: center;
+    background: linear-gradient(140deg, var(--color-hero-grad-1) 0%, var(--color-hero-grad-2) 100%);
+  }
+
+  .error-code {
+    font-size: clamp(6rem, 20vw, 10rem);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--color-accent);
+    letter-spacing: -0.05em;
+    margin-bottom: 16px;
+    opacity: 0.9;
+  }
+
+  .error-hero h1 {
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 14px;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+  }
+
+  .error-hero h1 em {
+    color: var(--color-accent);
+    font-style: normal;
+  }
+
+  .error-hero p {
+    color: rgba(255,255,255,0.6);
+    font-size: 1rem;
+    max-width: 480px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+  }
+
+  .error-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--color-cta);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 12px 28px;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: background var(--transition), transform 0.1s;
+  }
+
+  .btn-primary:hover {
+    background: var(--color-cta-hover);
+    text-decoration: none;
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    background: transparent;
+    color: rgba(255,255,255,0.75);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 12px 28px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255,255,255,0.25);
+    text-decoration: none;
+    transition: border-color var(--transition), color var(--transition);
+  }
+
+  .btn-secondary:hover {
+    border-color: rgba(255,255,255,0.6);
+    color: #fff;
+    text-decoration: none;
+  }
+
+  /* Сетка разделов */
+  .error-nav-section {
+    padding: 48px 0 56px;
+  }
+
+  .error-nav-section h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+  }
+
+  .error-nav-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+  }
+
+  .error-nav-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 12px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    color: var(--color-text-muted);
+    font-size: 0.83rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    transition: border-color var(--transition), color var(--transition),
+                box-shadow var(--transition), transform var(--transition);
+  }
+
+  .error-nav-card:hover {
+    border-color: var(--color-accent);
+    color: var(--color-text);
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+
+  .error-nav-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+</style>

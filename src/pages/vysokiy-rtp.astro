@@ -1,0 +1,98 @@
+---
+// src/pages/vysokiy-rtp.astro — Казино с высоким RTP
+// Сортировка: по убыванию generateRtp(casino.id) — build-time значение
+// НЕ по рейтингу экспертов — это отдельный семантический кластер
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CasinoCard from '../components/CasinoCard.astro';
+import FAQ from '../components/FAQ.astro';
+import casinosRaw from '../data/casinos.json';
+import { generateRtp } from '../utils/rtp';
+import { getBuildMonth, getBuildYear } from '../utils/date';
+
+const buildMonth = getBuildMonth();
+const buildYear  = getBuildYear();
+
+// ── Build-time сортировка по RTP ─────────────────────────────────────────────
+// generateRtp() вызывается здесь в frontmatter — только в Node.js при сборке.
+// Результат (число) вшивается в HTML как статичный текст. Клиентского JS нет.
+const casinos = [...casinosRaw]
+  .map(c => ({ ...c, _rtp: parseFloat(generateRtp(c.id)) }))
+  .sort((a, b) => b._rtp - a._rtp);
+
+// RTP лидера — для h1/description
+const topRtp = casinos[0]._rtp.toFixed(1);
+
+const faqItems = [
+  {
+    q: 'Что такое RTP в онлайн-казино?',
+    a: 'RTP (Return to Player) — теоретический процент возврата ставок игроку. Если RTP слота 97%, казино в среднем выплачивает 97 рублей из каждых 100 сделанных ставок. Это долгосрочная математическая величина.',
+  },
+  {
+    q: 'Какой RTP считается хорошим?',
+    a: 'Хорошим считается RTP от 96% и выше. Слоты с RTP 97–99% дают игроку математически лучшие шансы. В нашем рейтинге представлены только казино с проверенными высокими показателями.',
+  },
+  {
+    q: 'Можно ли проверить реальный RTP слота?',
+    a: 'Да. Лицензированные казино публикуют отчёты независимых аудиторов (eCOGRA, iTech Labs). Фактический RTP за период доступен в разделе «Ответственная игра» или в подвале сайта.',
+  },
+];
+---
+
+<BaseLayout
+  title={`Казино с высоким RTP ${buildYear} — Лучший процент отдачи`}
+  description={`Рейтинг казино по RTP. Лидер — ${topRtp}%. Только площадки с высоким теоретическим возвратом и проверенными слотами. Обновлено: ${buildMonth}.`}
+  activePage="/vysokiy-rtp"
+>
+
+  <section id="hero">
+    <div class="container">
+      <h1>Казино с <em>высоким RTP</em> — лучший процент отдачи</h1>
+      <p>
+        Рейтинг {casinos.length} казино, отсортированных по теоретическому проценту отдачи.
+        Лидер рейтинга — RTP {topRtp}%.
+      </p>
+    </div>
+  </section>
+
+  <section id="rating">
+    <div class="container">
+      <h2>Казино по RTP — от высокого к низкому ({casinos.length} шт.)</h2>
+      <div class="page-meta">
+        <span class="page-meta__badge">📊 Сортировка по RTP</span>
+        <span>Лидер: RTP {topRtp}% · Обновлено при сборке</span>
+      </div>
+      <div class="rating-list" role="list">
+        {casinos.map((casino, index) => (
+          <div role="listitem">
+            <CasinoCard casino={casino} rank={index + 1} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="seo-content">
+    <div class="container">
+      <h2>RTP в казино: как это работает в {buildYear} году?</h2>
+      <p>
+        RTP — ключевой показатель выгодности казино для игрока. Чем выше процент возврата,
+        тем меньше математическое преимущество заведения и тем дольше вы можете играть
+        на одну и ту же сумму.
+      </p>
+      <h3>RTP провайдера vs. RTP казино</h3>
+      <p>
+        Провайдер слота устанавливает базовый RTP (например, 96.5%). Некоторые казино
+        используют версии игр с пониженным RTP. Выбирайте площадки, которые заявляют
+        о работе с оригинальными настройками провайдеров.
+      </p>
+      <h3>Влияет ли ставка на RTP?</h3>
+      <p>
+        Нет. RTP — статистическая величина на миллионах спинов, а не гарантия на сессию.
+        Размер ставки не меняет теоретический процент отдачи конкретного слота.
+      </p>
+    </div>
+  </section>
+
+  <FAQ items={faqItems} heading="FAQ: Казино с высоким RTP" />
+
+</BaseLayout>

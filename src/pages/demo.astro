@@ -1,0 +1,88 @@
+---
+// src/pages/demo.astro — Казино с демо без регистрации
+// ФИЛЬТР: no_registration_demo === true
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CasinoCard from '../components/CasinoCard.astro';
+import FAQ from '../components/FAQ.astro';
+import casinosRaw from '../data/casinos.json';
+import { getBuildMonth, getBuildYear } from '../utils/date';
+
+const buildMonth = getBuildMonth();
+const buildYear  = getBuildYear();
+
+const casinos = [...casinosRaw]
+  .filter(c => c.no_registration_demo === true)
+  .sort((a, b) => b.rating - a.rating);
+
+const faqItems = [
+  {
+    q: 'Как играть в казино без регистрации?',
+    a: 'На сайтах из нашего рейтинга достаточно открыть любой слот и выбрать режим «Демо» или «Играть бесплатно». Регистрация и пополнение счёта не требуются.',
+  },
+  {
+    q: 'Можно ли выиграть реальные деньги в демо-режиме?',
+    a: 'Нет, в демо используются виртуальные монеты. Для игры на реальные деньги нужна регистрация и депозит. Зато демо — идеальный способ изучить слот без риска.',
+  },
+  {
+    q: 'Демо-версия отличается от платной игры?',
+    a: 'Нет. Механика, RTP и бонусные раунды в демо идентичны реальной игре. Разница только в валюте — виртуальные монеты вместо рублей.',
+  },
+];
+---
+
+<BaseLayout
+  title={`Демо казино без регистрации ${buildYear} — Играть бесплатно`}
+  description={`${casinos.length} казино с бесплатным демо-режимом без регистрации. Попробуйте слоты без риска прямо сейчас. Обновлено: ${buildMonth}.`}
+  activePage="/demo"
+>
+
+  <section id="hero">
+    <div class="container">
+      <h1>Казино с <em>демо без регистрации</em> — играть бесплатно</h1>
+      <p>
+        {casinos.length} казино, где можно играть бесплатно без создания аккаунта.
+        Идеально для знакомства со слотами.
+      </p>
+    </div>
+  </section>
+
+  <section id="rating">
+    <div class="container">
+      <h2>Казино с демо-режимом без регистрации ({casinos.length} шт.)</h2>
+      <div class="page-meta">
+        <span class="page-meta__badge">🎮 Демо доступно</span>
+        <span>Найдено: {casinos.length} казино</span>
+      </div>
+      <div class="rating-list" role="list">
+        {casinos.map((casino, index) => (
+          <div role="listitem">
+            <CasinoCard casino={casino} rank={index + 1} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="seo-content">
+    <div class="container">
+      <h2>Демо-режим в казино: зачем он нужен в {buildYear} году?</h2>
+      <p>
+        Демо-режим позволяет ознакомиться с механикой слота, протестировать стратегии
+        и понять, как часто выпадают бонусные раунды — без риска потерять деньги.
+      </p>
+      <h3>Какие слоты доступны в демо?</h3>
+      <p>
+        В демо-режиме доступна большая часть игровой библиотеки. Исключение — живые игры
+        с дилерами: они требуют регистрации, так как ведётся прямая трансляция с реальными крупье.
+      </p>
+      <h3>Как перейти к игре на деньги?</h3>
+      <p>
+        Если слот понравился в демо — зарегистрируйтесь, пополните счёт и получите приветственный
+        бонус. Многие казино дают фриспины при первом депозите именно на популярные слоты.
+      </p>
+    </div>
+  </section>
+
+  <FAQ items={faqItems} heading="FAQ: Демо-режим без регистрации" />
+
+</BaseLayout>

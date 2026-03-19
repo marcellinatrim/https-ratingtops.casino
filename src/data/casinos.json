@@ -10,6 +10,7 @@
     "go_link": "https://example.com/go/7k",
     "is_mobile_friendly": true,
     "has_license": true,
+    "fast_payout": true,
     "no_registration_demo": true
   },
   {
@@ -23,6 +24,7 @@
     "go_link": "https://example.com/go/fugu",
     "is_mobile_friendly": true,
     "has_license": true,
+    "fast_payout": true,
     "no_registration_demo": true
   },
   {
@@ -30,12 +32,13 @@
     "name": "Beef Casino",
     "logo": "/images/logo-placeholder.svg",
     "rating": 4.7,
-    "min_deposit": 500,
+    "min_deposit": 300,
     "bonus_text": "150% до 50 000 ₽ + 200 FS",
     "features": ["VIP-программа", "Турниры"],
     "go_link": "https://example.com/go/beef",
     "is_mobile_friendly": true,
     "has_license": false,
+    "fast_payout": false,
     "no_registration_demo": true
   },
   {
@@ -49,6 +52,7 @@
     "go_link": "https://example.com/go/martin",
     "is_mobile_friendly": false,
     "has_license": true,
+    "fast_payout": true,
     "no_registration_demo": false
   },
   {
@@ -62,6 +66,7 @@
     "go_link": "https://example.com/go/flagman",
     "is_mobile_friendly": true,
     "has_license": true,
+    "fast_payout": true,
     "no_registration_demo": false
   },
   {
@@ -75,6 +80,7 @@
     "go_link": "https://example.com/go/gizbo",
     "is_mobile_friendly": true,
     "has_license": true,
+    "fast_payout": false,
     "no_registration_demo": true
   },
   {
@@ -88,6 +94,7 @@
     "go_link": "https://example.com/go/1win",
     "is_mobile_friendly": true,
     "has_license": false,
+    "fast_payout": true,
     "no_registration_demo": true
   },
   {
@@ -101,6 +108,7 @@
     "go_link": "https://example.com/go/starda",
     "is_mobile_friendly": false,
     "has_license": true,
+    "fast_payout": true,
     "no_registration_demo": false
   },
   {
@@ -114,6 +122,7 @@
     "go_link": "https://example.com/go/monro",
     "is_mobile_friendly": true,
     "has_license": true,
+    "fast_payout": false,
     "no_registration_demo": true
   },
   {
@@ -127,6 +136,7 @@
     "go_link": "https://example.com/go/irwin",
     "is_mobile_friendly": true,
     "has_license": false,
+    "fast_payout": true,
     "no_registration_demo": true
   },
   {
@@ -140,6 +150,7 @@
     "go_link": "https://example.com/go/fresh",
     "is_mobile_friendly": true,
     "has_license": true,
+    "fast_payout": false,
     "no_registration_demo": false
   },
   {
@@ -153,6 +164,7 @@
     "go_link": "https://example.com/go/sol",
     "is_mobile_friendly": false,
     "has_license": true,
+    "fast_payout": true,
     "no_registration_demo": true
   },
   {
@@ -160,12 +172,13 @@
     "name": "Izzi Casino",
     "logo": "/images/logo-placeholder.svg",
     "rating": 4.2,
-    "min_deposit": 1000,
+    "min_deposit": 300,
     "bonus_text": "100% до 50 000 ₽ + 200 FS",
     "features": ["VIP-статус", "Есть крипта"],
     "go_link": "https://example.com/go/izzi",
     "is_mobile_friendly": true,
     "has_license": true,
+    "fast_payout": false,
     "no_registration_demo": false
   },
   {
@@ -179,6 +192,7 @@
     "go_link": "https://example.com/go/drip",
     "is_mobile_friendly": true,
     "has_license": false,
+    "fast_payout": true,
     "no_registration_demo": true
   },
   {
@@ -192,6 +206,7 @@
     "go_link": "https://example.com/go/1go",
     "is_mobile_friendly": true,
     "has_license": true,
+    "fast_payout": false,
     "no_registration_demo": true
   }
 ]

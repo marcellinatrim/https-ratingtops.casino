@@ -1,13 +1,13 @@
 ---
 // Footer.astro — Подвал сайта
 const footerNav = [
-  { href: '/', label: 'Все казино' },
-  { href: '/min-depozit', label: 'Мин. депозит' },
-  { href: '/mobilnye', label: 'Мобильные' },
-  { href: '/s-litsenziei', label: 'С лицензией' },
-  { href: '/demo-bez-registracii', label: 'Демо' },
-  { href: '/about', label: 'О нас' },
-  { href: '/privacy', label: 'Политика' },
+  { href: '/',                label: 'Все казино' },
+  { href: '/s-litsenziei',   label: 'С лицензией' },
+  { href: '/mobilnye',        label: 'Мобильные' },
+  { href: '/bystrye-vyplaty', label: 'Быстрые выплаты' },
+  { href: '/min-depozit',     label: 'Мин. депозит' },
+  { href: '/demo',            label: 'Демо' },
+  { href: '/vysokiy-rtp',     label: 'Высокий RTP' },
 ];
 
 const currentYear = new Date().getFullYear();
@@ -16,13 +16,11 @@ const currentYear = new Date().getFullYear();
 <footer class="site-footer">
   <div class="container">
     <div class="footer-inner">
-      <!-- Бренд -->
       <div class="footer-brand">
         <div class="footer-logo">Казино<span>Рейтинг</span></div>
         <div class="footer-tagline">Независимый агрегатор · Обновляется ежемесячно</div>
       </div>
 
-      <!-- Навигация -->
       <nav aria-label="Навигация в подвале">
         <ul class="footer-nav">
           {footerNav.map(item => (
@@ -32,7 +30,6 @@ const currentYear = new Date().getFullYear();
       </nav>
     </div>
 
-    <!-- Дисклеймер -->
     <div class="footer-disclaimer">
       <p>
         © {currentYear} КазиноРейтинг — независимый агрегатор онлайн-казино.
@@ -41,7 +38,7 @@ const currentYear = new Date().getFullYear();
       </p>
       <p>
         <strong>18+</strong> Игорная деятельность сопряжена с риском. Играйте ответственно.
-        При наличии признаков игровой зависимости обратитесь за помощью к специалисту.
+        При признаках игровой зависимости обратитесь за помощью к специалисту.
       </p>
     </div>
   </div>

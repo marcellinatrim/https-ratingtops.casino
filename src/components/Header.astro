@@ -7,22 +7,22 @@ interface Props {
 const { activePage = '' } = Astro.props;
 
 const nav = [
-  { href: '/', label: 'Все казино' },
-  { href: '/min-depozit', label: 'Мин. депозит' },
-  { href: '/mobilnye', label: 'Мобильные' },
-  { href: '/s-litsenziei', label: 'С лицензией' },
-  { href: '/demo-bez-registracii', label: 'Демо' },
+  { href: '/',                label: 'Все казино' },
+  { href: '/s-litsenziei',   label: 'С лицензией' },
+  { href: '/mobilnye',        label: 'Мобильные' },
+  { href: '/bystrye-vyplaty', label: 'Быстрые выплаты' },
+  { href: '/min-depozit',     label: 'Мин. депозит' },
+  { href: '/demo',            label: 'Демо' },
+  { href: '/vysokiy-rtp',     label: 'Высокий RTP' },
 ];
 ---
 
 <header class="site-header">
   <div class="container">
-    <!-- Логотип -->
     <a href="/" class="site-logo">
       Казино<span>Рейтинг</span>
     </a>
 
-    <!-- Навигация (десктоп) -->
     <nav aria-label="Основная навигация">
       <ul class="site-nav">
         {nav.map(item => (
@@ -38,9 +38,7 @@ const nav = [
       </ul>
     </nav>
 
-    <!-- Правая группа кнопок -->
     <div class="header-right">
-      <!-- Переключатель темы -->
       <button
         class="theme-toggle"
         id="theme-toggle"
@@ -51,7 +49,6 @@ const nav = [
         <span class="icon-sun"  aria-hidden="true">☀️</span>
       </button>
 
-      <!-- Бургер (мобайл) -->
       <button
         class="nav-toggle"
         id="nav-toggle"
@@ -66,7 +63,6 @@ const nav = [
     </div>
   </div>
 
-  <!-- Мобильное меню -->
   <nav id="mobile-nav" class="mobile-nav" aria-label="Мобильная навигация">
     {nav.map(item => (
       <a
@@ -79,23 +75,13 @@ const nav = [
   </nav>
 </header>
 
-<!-- ====================================================
-  Скрипт темы — инлайн, выполняется ДО рендера (no-FOUC)
-  Используем id=theme-init в <head> через BaseLayout.
-  Здесь только обработчики событий.
-==================================================== -->
 <script>
   (function () {
-    // ---- Применить тему немедленно (вызывается из BaseLayout <head>) ----
-    // Функция вынесена глобально, чтобы BaseLayout мог вызвать её до рендера
-
     function applyTheme(theme: string) {
       document.documentElement.setAttribute('data-theme', theme);
     }
 
-    // ---- Theme Toggle ----
     const btn = document.getElementById('theme-toggle') as HTMLButtonElement | null;
-
     if (btn) {
       btn.addEventListener('click', () => {
         const current = document.documentElement.getAttribute('data-theme') || 'light';
@@ -105,7 +91,6 @@ const nav = [
       });
     }
 
-    // ---- Mobile Menu Toggle ----
     const navToggle = document.getElementById('nav-toggle') as HTMLButtonElement | null;
     const mobileNav = document.getElementById('mobile-nav') as HTMLElement | null;
 
@@ -116,7 +101,6 @@ const nav = [
         navToggle.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
       });
 
-      // Закрыть меню при клике вне
       document.addEventListener('click', (e) => {
         if (!navToggle.contains(e.target as Node) && !mobileNav.contains(e.target as Node)) {
           mobileNav.classList.remove('is-open');

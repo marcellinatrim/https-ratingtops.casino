@@ -1,0 +1,89 @@
+---
+// src/pages/bystrye-vyplaty.astro — Казино с быстрыми выплатами
+// ФИЛЬТР: fast_payout === true
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CasinoCard from '../components/CasinoCard.astro';
+import FAQ from '../components/FAQ.astro';
+import casinosRaw from '../data/casinos.json';
+import { getBuildMonth, getBuildYear } from '../utils/date';
+
+const buildMonth = getBuildMonth();
+const buildYear  = getBuildYear();
+
+const casinos = [...casinosRaw]
+  .filter(c => c.fast_payout === true)
+  .sort((a, b) => b.rating - a.rating);
+
+const faqItems = [
+  {
+    q: 'Что значит «быстрые выплаты» в казино?',
+    a: 'Быстрые выплаты — вывод средств за 15 минут до 24 часов. Это достигается за счёт автоматической обработки заявок и поддержки мгновенных платёжных методов: криптовалюта, СБП, электронные кошельки.',
+  },
+  {
+    q: 'Как долго обрабатывается вывод в обычном казино?',
+    a: 'В среднем — от 1 до 5 рабочих дней. Некоторые казино дополнительно требуют верификацию документов, что увеличивает срок. Площадки из нашего списка обрабатывают выплаты значительно быстрее.',
+  },
+  {
+    q: 'Какой способ вывода самый быстрый?',
+    a: 'Криптовалюта (Bitcoin, USDT, Ethereum) и электронные кошельки обрабатываются быстрее всего — часто в течение нескольких минут. Банковские карты занимают больше времени из-за банковских процессов.',
+  },
+];
+---
+
+<BaseLayout
+  title={`Казино с быстрыми выплатами ${buildYear} — Рейтинг`}
+  description={`${casinos.length} казино с мгновенными выплатами. Вывод средств за 15–60 минут. Проверенные площадки с быстрой обработкой заявок. Обновлено: ${buildMonth}.`}
+  activePage="/bystrye-vyplaty"
+>
+
+  <section id="hero">
+    <div class="container">
+      <h1>Казино с <em>быстрыми выплатами</em> — вывод до 60 минут</h1>
+      <p>
+        {casinos.length} казино с мгновенной обработкой заявок на вывод.
+        Получайте выигрыш без ожидания.
+      </p>
+    </div>
+  </section>
+
+  <section id="rating">
+    <div class="container">
+      <h2>Казино с быстрым выводом средств ({casinos.length} шт.)</h2>
+      <div class="page-meta">
+        <span class="page-meta__badge">⚡ Быстрый вывод</span>
+        <span>Найдено: {casinos.length} казино</span>
+      </div>
+      <div class="rating-list" role="list">
+        {casinos.map((casino, index) => (
+          <div role="listitem">
+            <CasinoCard casino={casino} rank={index + 1} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="seo-content">
+    <div class="container">
+      <h2>Казино с быстрыми выплатами: что важно знать в {buildYear} году?</h2>
+      <p>
+        Скорость вывода — один из ключевых показателей качества казино. Площадки из нашего
+        рейтинга обрабатывают заявки автоматически, без ручной проверки каждого запроса.
+      </p>
+      <h3>Почему в одних казино выплаты быстрее?</h3>
+      <p>
+        Скорость вывода определяется уровнем автоматизации процессинга, используемыми платёжными
+        системами и политикой верификации. Лучшие казино минимизируют ручные проверки для
+        проверенных игроков.
+      </p>
+      <h3>Влияет ли сумма вывода на скорость?</h3>
+      <p>
+        Крупные суммы (от 50 000 ₽ и выше) нередко требуют дополнительной проверки безопасности.
+        Для стандартных сумм в казино с быстрыми выплатами время обработки не превышает 1 часа.
+      </p>
+    </div>
+  </section>
+
+  <FAQ items={faqItems} heading="FAQ: Казино с быстрыми выплатами" />
+
+</BaseLayout>

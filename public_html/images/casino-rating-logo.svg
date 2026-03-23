@@ -1,0 +1,85 @@
+<svg width="1200" height="320" viewBox="0 0 1200 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gold" x1="40" y1="32" x2="320" y2="288" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFE7A3"/>
+      <stop offset="0.32" stop-color="#FFD15C"/>
+      <stop offset="0.68" stop-color="#F3A81D"/>
+      <stop offset="1" stop-color="#C97A00"/>
+    </linearGradient>
+    <linearGradient id="goldSoft" x1="220" y1="62" x2="64" y2="260" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFF3C9" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#E8A418" stop-opacity="0.95"/>
+    </linearGradient>
+    <linearGradient id="red" x1="25" y1="70" x2="295" y2="270" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F45059"/>
+      <stop offset="1" stop-color="#B6122B"/>
+    </linearGradient>
+    <linearGradient id="textGold" x1="350" y1="50" x2="1030" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFF0B2"/>
+      <stop offset="0.33" stop-color="#FFD665"/>
+      <stop offset="0.68" stop-color="#F0A81D"/>
+      <stop offset="1" stop-color="#B56B00"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="1200" height="320" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+    <filter id="innerGlow" x="0" y="0" width="360" height="320" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0.15 0 1 0 0 0.08 0 0 1 0 0 0 0 0 1 0" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g filter="url(#shadow)">
+    <!-- Icon -->
+    <g transform="translate(24 20)">
+      <circle cx="136" cy="140" r="116" fill="#221313"/>
+      <circle cx="136" cy="140" r="108" stroke="url(#gold)" stroke-width="16"/>
+      <circle cx="136" cy="140" r="92" fill="url(#red)"/>
+
+      <!-- Chip marks -->
+      <g fill="url(#goldSoft)">
+        <rect x="128" y="16" width="16" height="28" rx="6"/>
+        <rect x="128" y="236" width="16" height="28" rx="6"/>
+        <rect x="236" y="132" width="28" height="16" rx="6"/>
+        <rect x="8" y="132" width="28" height="16" rx="6"/>
+
+        <rect x="205.6" y="40.4" width="16" height="28" rx="6" transform="rotate(45 205.6 40.4)"/>
+        <rect x="50.1" y="195.9" width="16" height="28" rx="6" transform="rotate(45 50.1 195.9)"/>
+        <rect x="40.4" y="66.4" width="28" height="16" rx="6" transform="rotate(-45 40.4 66.4)"/>
+        <rect x="195.9" y="221.9" width="28" height="16" rx="6" transform="rotate(-45 195.9 221.9)"/>
+      </g>
+
+      <!-- Crown -->
+      <g filter="url(#innerGlow)">
+        <path d="M77 176L89 102L118 134L136 86L154 134L183 102L195 176H77Z" fill="url(#gold)"/>
+        <path d="M77 176H195L187 203C185.5 208.1 180.8 211.6 175.4 211.6H96.6C91.2 211.6 86.5 208.1 85 203L77 176Z" fill="url(#goldSoft)"/>
+        <circle cx="89" cy="100" r="8" fill="#FFF1C5"/>
+        <circle cx="136" cy="83" r="9" fill="#FFF1C5"/>
+        <circle cx="183" cy="100" r="8" fill="#FFF1C5"/>
+      </g>
+
+      <!-- Rating star -->
+      <path d="M136 128.5L143.6 143.9L160.6 146.4L148.3 158.4L151.2 175.3L136 167.3L120.8 175.3L123.7 158.4L111.4 146.4L128.4 143.9L136 128.5Z" fill="#FFF5D1"/>
+
+      <!-- Bottom ribbon -->
+      <path d="M56 225C79.7 212.4 102.5 206 136 206C169.5 206 192.3 212.4 216 225L195.5 252C177.8 242.7 160.4 237.8 136 237.8C111.6 237.8 94.2 242.7 76.5 252L56 225Z" fill="#2A1717" stroke="url(#gold)" stroke-width="5"/>
+      <text x="136" y="232" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="800" fill="#FFE39B">TOP</text>
+    </g>
+
+    <!-- Text -->
+    <g transform="translate(338 0)">
+      <text x="0" y="136" font-family="Arial, Helvetica, sans-serif" font-size="82" font-weight="900" letter-spacing="2.5" fill="url(#textGold)">РЕЙТИНГ</text>
+      <text x="0" y="224" font-family="Arial, Helvetica, sans-serif" font-size="82" font-weight="900" letter-spacing="2.5" fill="url(#textGold)">КАЗИНО</text>
+
+      <rect x="2" y="246" width="494" height="8" rx="4" fill="url(#gold)" opacity="0.95"/>
+      <rect x="520" y="246" width="86" height="8" rx="4" fill="#7E141F" opacity="0.95"/>
+      <rect x="618" y="246" width="54" height="8" rx="4" fill="url(#gold)" opacity="0.95"/>
+
+      <text x="0" y="286" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" letter-spacing="2" fill="#F7D98A" opacity="0.95">ЧЕСТНЫЙ ТОП • ОБЗОРЫ • БОНУСЫ</text>
+    </g>
+  </g>
+</svg>
